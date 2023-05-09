@@ -7,7 +7,7 @@
     "build": "tsc",
     "tsc:watch": "tsc --watch",
     "node:watch": "node --watch dist/main.js",
-    "start:local": "ts-node src/main.ts",
+    "run:main": "ts-node src/main.ts",
     "lint:staged": "lint-staged",
     "test": "jest --passWithNoTests --runInBand",
     "test:simplified": "npm test -- --silent --noStackTrace --coverage=false",
