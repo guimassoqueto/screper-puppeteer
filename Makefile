@@ -7,6 +7,9 @@ HUSKY=npx husky install
 install:
 	${HUSKY} && ${PACKAGE_MANAGER} install
 
+env:
+	cat .env.sample 1> .env
+
 ## transpile to typescript
 build:
 	${PACKAGE_MANAGER_RUN} build
