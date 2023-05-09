@@ -7,6 +7,14 @@ HUSKY=npx husky install
 install:
 	${HUSKY} && ${PACKAGE_MANAGER} install
 
+## run dist/main.ts without transpile 
+main:
+	${PACKAGE_MANAGER_RUN} run:main
+
+## create .env file from .env.example
+env:
+	cat .env.sample 1> .env
+
 ## transpile to typescript
 build:
 	${PACKAGE_MANAGER_RUN} build
