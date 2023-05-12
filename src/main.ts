@@ -1,19 +1,52 @@
 import puppeteer from 'puppeteer'
 
+interface FirstPageAndPageCount {
+  firstPageURL: string
+  pageCount: number
+}
+
 const PRODUCTS_LINKS: string[] = []
 const DEALS_LINKS: string[] = []
-
-function amazonOffersPage (val: number): string {
-  return `https://www.amazon.com.br/deals?ref_=nav_cs_gb&deals-widget=%257B%2522version%2522%253A1%252C%2522viewIndex%2522%253A${val === 0 ? '' : val}0%252C%2522presetId%2522%253A%2522deals-collection-all-deals%2522%252C%2522sorting%2522%253A%2522FEATURED%2522%257D`
-}
 
 interface ProdDeals {
   products: string[]
   deals: string[]
 }
 
+/**
+ * Função que abre a página de ofertas do dia
+ * @retorna URL da primeira página de ofertas, total de páginas de ofertas
+ */
+async function getFirstPageAndPageCount (): Promise<FirstPageAndPageCount> {
+  const browser = await puppeteer.launch({ headless: 'new' })
+  const page = await browser.newPage()
+  await page.setViewport({ height: 1080, width: 1920 })
+  await page.goto('https://amazon.com.br/deals')
+
+  const firstPageURL = await page.$eval('li>a', el => el.href)
+  const pageCount = (await page.$$eval('li.a-disabled', li => li.map(element => element.textContent))).pop()
+
+  await browser.close()
+
+  if (firstPageURL && pageCount) return { firstPageURL, pageCount: Number.parseInt(pageCount) - 1 }
+  throw new Error('Fail to get pages')
+}
+/**
+ * Função que gera o link da página de ofertas
+ * @param offersPageOneUrl url da primeira página de ofertas
+ * (deve ser igual ao valor firstPageURL obtido da função getFirstPageAndPageCount)
+ * @param pageNumber número da página que será gerada
+ * (não deve ultrapassar o valor de pageCount obtido da função getFirstPageAndPageCount)
+ * @returns a url da página de ofertas
+ */
+function amazonOffersPage (offersPageOneUrl: string, pageNumber: number): string {
+  const pattern = '{{XXX}}'
+  const url = offersPageOneUrl.replace('%253A0%', `%253A${pattern}0%`).replace(pattern, `${pageNumber === 0 ? '' : pageNumber}`)
+  return url
+}
+
 async function runPuppeteerAmazon (url: string): Promise<ProdDeals | undefined> {
-  console.info(`Scraping offers from page ${1}. Please wait...`)
+  console.info('Scraping offers from page ___. Please wait...')
 
   const browser = await puppeteer.launch({ headless: 'new' })
   const page = await browser.newPage()
@@ -28,7 +61,7 @@ async function runPuppeteerAmazon (url: string): Promise<ProdDeals | undefined> 
     return
   }
 
-  console.info(`Getting all hrefs from page ${1}. Please wait...`)
+  console.info('Getting all hrefs from page ___. Please wait...')
   const hrefs = await page.$$eval('a', as => as.map(a => a.href))
 
   console.info('Hrefs extracted. Closing browser...')
@@ -95,7 +128,8 @@ async function addProductLinks (prodDeals: ProdDeals | undefined): Promise<void>
 
 (async () => {
   try {
-    const prodDeals = await runPuppeteerAmazon(amazonOffersPage(0))
+    const { firstPageURL } = await getFirstPageAndPageCount()
+    const prodDeals = await runPuppeteerAmazon(amazonOffersPage(firstPageURL, 0))
     await addProductLinks(prodDeals)
 
     if (prodDeals?.deals) {
@@ -111,8 +145,10 @@ async function addProductLinks (prodDeals: ProdDeals | undefined): Promise<void>
       const prods = await runPuppeteerAmazon(deal)
       await addProductLinks(prods)
     }
+
+    console.log(PRODUCTS_LINKS)
   } catch (error) {
     console.error(error)
   }
 })()
-  .finally(() => { console.log(PRODUCTS_LINKS) })
+  .finally(() => { console.log('Done') })
