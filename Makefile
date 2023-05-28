@@ -1,7 +1,7 @@
 PACKAGE_MANAGER=npm
 PACKAGE_MANAGER_RUN=npm run
-BROWSER=firefox
 HUSKY=npx husky install
+GUI=xdg-open
 
 ## intall husky hooks and node dependencies
 install:
@@ -40,5 +40,9 @@ test-file:
 	${PACKAGE_MANAGER_RUN} test -- tests/unit/test-case.test.ts
 
 ## open repository page
-open-repo:
-	${BROWSER} -url "https://github.com/guimassoqueto/scraper-puppeteer"
+or:
+	open "https://github.com/guimassoqueto/scraper-puppeteer"
+
+## open project folder in GUI
+od:
+	${GUI} .
