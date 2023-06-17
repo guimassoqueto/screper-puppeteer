@@ -4,11 +4,11 @@ HUSKY=npx husky install
 GUI=xdg-open
 
 ## intall husky hooks and node dependencies
-install:
+i:
 	${HUSKY} && ${PACKAGE_MANAGER} install
 
 ## run dist/main.ts without transpile 
-main:
+sts:
 	${PACKAGE_MANAGER_RUN} run:main
 
 ## create .env file from .env.example
@@ -16,27 +16,27 @@ env:
 	cat .env.sample 1> .env
 
 ## transpile to typescript
-build:
+b:
 	${PACKAGE_MANAGER_RUN} build
 
 ## run all tests (slowly: with logs and details)
-test:
+t:
 	${PACKAGE_MANAGER_RUN} test
 
 ## run all tests in a simplified way (fastes, no logs, no info, no details)
-test-simple:
+ts:
 	${PACKAGE_MANAGER_RUN} test:simplified
 
 ## run all unit tests (located in tests/unit)
-test-unit:
+tu:
 	${PACKAGE_MANAGER_RUN} test:unit
 
 ## run all integratiopn tests (located in tests/integration)
-test-int:
+ti:
 	${PACKAGE_MANAGER_RUN} test:integration
 
 ## run test on a specif file
-test-file:
+tf:
 	${PACKAGE_MANAGER_RUN} test -- tests/unit/test-case.test.ts
 
 ## open repository page
