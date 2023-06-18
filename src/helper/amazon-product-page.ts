@@ -28,9 +28,21 @@ function test (): void {
   const header = document.getElementById('nav-main') as HTMLElement
   header.style.display = 'none'
 
+  // Remove the popup for app installation whether it appears
+  const appInstallPopup = document.querySelectorAll('.sparkle-container.sparkle-open')
+  if (appInstallPopup.length) {
+    const popup = appInstallPopup[0] as HTMLElement
+    popup.style.display = 'none'
+  }
+
   // scroll, from top, 65px
   window.scrollBy(0, 65)
 
+  // add a margin at the top
+  const prodContainer = document.querySelector('#productTitleGroupAnchor') as HTMLElement
+  prodContainer.style.marginTop = '25px'
+
+  // increase the font size of product tile
   const productName = document.querySelector('#title') as HTMLElement
   productName.classList.replace('a-size-small', 'a-size-big')
   productName.style.fontWeight = '1000'
