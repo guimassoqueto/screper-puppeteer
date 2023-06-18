@@ -1,6 +1,6 @@
-import { AmazonProductPage } from './helper/test-class'
+import { AmazonProductPage } from './helper/amazon-product-page'
 
-const screenshot = new AmazonProductPage('B08F7DBTRX')
+const screenshot = new AmazonProductPage('<PRODUCT_ID_AMAZON>')
 
 screenshot.takeScreenshot()
   .catch(error => { console.error(error) })
