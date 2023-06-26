@@ -15,10 +15,10 @@ export class AmazonProductPage {
     this.page = await this.browser.newPage()
 
     await this.page.emulate(this.device)
-    await this.page.goto(this.productUrl)
+    await this.page.goto(this.productUrl, { waitUntil: 'networkidle0' })
     await this.page.evaluate(test)
 
-    await this.page.screenshot({ path: `${this.productCode}.png` })
+    await this.page.screenshot({ path: `./screenshots/${this.productCode}.png` })
     await this.browser.close()
   }
 }
@@ -40,7 +40,7 @@ function test (): void {
 
   // add a margin at the top
   const prodContainer = document.querySelector('#productTitleGroupAnchor') as HTMLElement
-  prodContainer.style.marginTop = '25px'
+  prodContainer.style.marginTop = '50px'
 
   // increase the font size of product tile
   const productName = document.querySelector('#title') as HTMLElement
