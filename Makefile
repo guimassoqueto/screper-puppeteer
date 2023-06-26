@@ -9,7 +9,11 @@ i:
 
 ## run dist/main.ts without transpile 
 sts:
-	${PACKAGE_MANAGER_RUN} run:main
+	${PACKAGE_MANAGER_RUN} run:ts
+
+## run dist/main.ts without transpile 
+sjs:
+	rm -rf dist/ && ${PACKAGE_MANAGER_RUN} build && ${PACKAGE_MANAGER_RUN} run:js
 
 ## create .env file from .env.example
 env:
