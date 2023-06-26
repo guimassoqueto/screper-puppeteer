@@ -18,48 +18,32 @@ export class AmazonProductPage {
 
     await this.page.emulate(this.device)
     await this.page.goto(this.productUrl, { waitUntil: 'networkidle0' })
-    await this.page.evaluate(test)
+    await this.page.evaluate(this.evaluate)
 
     await this.page.screenshot({ path: `./screenshots/${this.productCode}.png` })
     await this.browser.close()
   }
-}
 
-function test (): void {
-  // Hide header
-  const header = document.getElementById('nav-main') as HTMLElement
-  header.style.display = 'none'
+  private evaluate (): void {
+    function changeElementStyle (querySelector: string, CSSProperty: string, CSSPropertyValue: string): void {
+      const element = document.querySelector(querySelector) as HTMLElement
+      if (element) element.style[CSSProperty] = CSSPropertyValue
+    }
 
-  // Remove the popup for app installation whether it appears
-  const appInstallPopup = document.querySelectorAll('.sparkle-container.sparkle-open')
-  if (appInstallPopup.length) {
-    const popup = appInstallPopup[0] as HTMLElement
-    popup.style.display = 'none'
+    // TEMPLATE: all
+    changeElementStyle('#nav-main', 'display', 'none') // hide header
+    changeElementStyle('#detailILMPercolate_feature_div', 'display', 'none') // hide top banner
+    changeElementStyle('#dp', 'marginTop', '25px') // marginTop
+    changeElementStyle('#acBadge_feature_div', 'display', 'none') // escolha da amazon
+
+    const title = document.querySelector('#title') as HTMLElement // product title
+    if (title) {
+      title.classList.remove('a-size-small')
+      title.style.fontSize = '20px'
+      title.style.color = '#000'
+    }
+
+    const previousPrice = document.querySelector('span.a-price.a-text-price') as HTMLElement
+    if (previousPrice) previousPrice.style.fontSize = '24px'
   }
-
-  // scroll, from top, 65px
-  window.scrollBy(0, 65)
-
-  // add a margin at the top
-  const prodContainer = document.querySelector('#productTitleGroupAnchor') as HTMLElement
-  prodContainer.style.marginTop = '50px'
-
-  // increase the font size of product tile
-  const productName = document.querySelector('#title') as HTMLElement
-  productName.classList.replace('a-size-small', 'a-size-big')
-  productName.style.fontWeight = '1000'
-
-  // increase old price font size
-  const previousPrices = document.querySelectorAll('span.a-price.a-text-price')
-  if (previousPrices.length === 1) {
-    const previousPrice = previousPrices[0] as HTMLElement
-    previousPrice.style.fontSize = '24px'
-  } else {
-    const previousPrice = previousPrices[previousPrices.length - 1] as HTMLElement
-    previousPrice.style.fontSize = '24px'
-  }
-
-  // remove the remain content from page
-  const installmentsElement = document.querySelector('#installmentCalculator_feature_div') as HTMLElement
-  installmentsElement.style.paddingBottom = '1000px'
 }
