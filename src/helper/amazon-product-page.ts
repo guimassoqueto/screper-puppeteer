@@ -1,4 +1,5 @@
 import puppeteer, { type Browser, KnownDevices, type Page } from 'puppeteer'
+import { fakeHeader } from './fake-header'
 
 export class AmazonProductPage {
   private readonly device = KnownDevices['iPhone 13 Pro Max']
@@ -13,6 +14,7 @@ export class AmazonProductPage {
   async takeScreenshot (): Promise<void> {
     this.browser = await puppeteer.launch({ headless: 'new' })
     this.page = await this.browser.newPage()
+    await this.page.setExtraHTTPHeaders(fakeHeader())
 
     await this.page.emulate(this.device)
     await this.page.goto(this.productUrl, { waitUntil: 'networkidle0' })
