@@ -36,6 +36,17 @@ export class AmazonProductPage {
       return element
     }
 
+    function isElementValid (querySelector: string, innerTextRegExp: RegExp): boolean {
+      const elements = document.querySelectorAll('span.a-text-bold')
+      if (!elements.length) return false
+
+      for (const element of elements) {
+        if (innerTextRegExp.test(element.innerText)) return true
+      }
+
+      return false
+    }
+
     /** *************************TEMPLATE: all******************************/
     changeElementStyle('#nav-main', 'display', 'none') // elements/element-1
     changeElementStyle('#detailILMPercolate_feature_div', 'display', 'none') // elements/element-3
@@ -44,8 +55,11 @@ export class AmazonProductPage {
     changeElementStyle('#logoByLine_feature_div', 'display', 'none') // elements/element-5
     changeElementStyle('span.a-price.a-text-price', 'fontSize', '24px') // previous price
     changeElementStyle('span.basisPriceLegalMessage', 'display', 'none') // previous price info icon
+    changeElementStyle('#basisPriceLegalMessage_feature_div', 'display', 'none') // elements/element-13
     changeElementStyle('span.a-declarative>a#trigger_installmentCalculator', 'display', 'none') // elements/element-9
     changeElementStyle('#image-block-pagination', 'display', 'none') // elements/element-10
+    changeElementStyle('#deliveryBlockContainerMobile', 'marginTop', '5000px') // elements/element-15
+    changeElementStyle('#icon-farm-widget-0', 'marginTop', '5000px') // elements/element-2
 
     const title = document.querySelector('#title') as HTMLElement // product title
     if (title) {
@@ -54,10 +68,6 @@ export class AmazonProductPage {
       title.style.color = '#000'
     }
 
-    /** *************************TEMPLATE: common******************************/
-    // aparentemente é o elemento que define o que deve sumir a partir daqui
-    changeElementStyle('#icon-farm-widget-0', 'marginTop', '5000px') // elements/element-2
-
     /** *************************TEMPLATE: relampago******************************/
     const thunderDeal = querySelectorElement('div.a-section.a-spacing-none.celwidget>div.a-row.header-text>span.a-text-bold')
     if (thunderDeal && /oferta\srel.mpago/i.test(thunderDeal.innerText)) {
@@ -65,6 +75,13 @@ export class AmazonProductPage {
       changeElementStyle('#claimBar_feature_div', 'display', 'none') // elements/element-7
       changeElementStyle('#promoPriceBlockMessage_feature_div', 'display', 'none') // elements/element-8
       changeElementStyle('#apex_mobile_feature_div>div.a-spacing-top-small', 'paddingBottom', '5000px')
+    }
+
+    /** *************************TEMPLATE: recorrente******************************/
+    const isRecurrent = isElementValid('span.a-text-bold', /comprar.com.recorr.ncia/i)
+    if (isRecurrent) {
+      changeElementStyle('#mobile_buybox_feature_div', 'display', 'none') // elements/element-11
+      changeElementStyle('#olpLinkWidget_feature_div', 'marginTop', '5000px') // elements/element-12
     }
   }
 }
