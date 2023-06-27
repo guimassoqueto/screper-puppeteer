@@ -35,6 +35,7 @@ export class AmazonProductPage {
     changeElementStyle('#detailILMPercolate_feature_div', 'display', 'none') // hide top banner
     changeElementStyle('#dp', 'marginTop', '25px') // marginTop
     changeElementStyle('#acBadge_feature_div', 'display', 'none') // escolha da amazon
+    changeElementStyle('#logoByLine_feature_div', 'display', 'none') // barra superior que leva aos produtos da marca
 
     const title = document.querySelector('#title') as HTMLElement // product title
     if (title) {
@@ -42,8 +43,5 @@ export class AmazonProductPage {
       title.style.fontSize = '20px'
       title.style.color = '#000'
     }
-
-    const previousPrice = document.querySelector('span.a-price.a-text-price') as HTMLElement
-    if (previousPrice) previousPrice.style.fontSize = '24px'
   }
 }
