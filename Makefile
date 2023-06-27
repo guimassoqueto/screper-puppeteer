@@ -9,7 +9,7 @@ i:
 
 ## run dist/main.ts without transpile 
 sts:
-	${PACKAGE_MANAGER_RUN} run:ts
+	rm -rf screenshots/* && ${PACKAGE_MANAGER_RUN} run:ts
 
 ## run dist/main.ts without transpile 
 sjs:
