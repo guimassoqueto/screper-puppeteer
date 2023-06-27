@@ -30,18 +30,72 @@ export class AmazonProductPage {
       if (element) element.style[CSSProperty] = CSSPropertyValue
     }
 
-    // TEMPLATE: all
-    changeElementStyle('#nav-main', 'display', 'none') // hide header
-    changeElementStyle('#detailILMPercolate_feature_div', 'display', 'none') // hide top banner
+    function querySelectorElement (querySelector: string): null | HTMLElement {
+      const element = document.querySelector(querySelector) as HTMLElement
+      if (!element) return null
+      return element
+    }
+
+    function isElementValid (querySelector: string, innerTextRegExp: RegExp): boolean {
+      const elements = document.querySelectorAll('span.a-text-bold')
+      if (!elements.length) return false
+
+      for (const element of elements) {
+        if (innerTextRegExp.test((element as HTMLElement).innerText)) return true
+      }
+
+      return false
+    }
+
+    /** *************************TEMPLATE: all******************************/
+    changeElementStyle('#nav-main', 'display', 'none') // elements/element-1
+    changeElementStyle('#detailILMPercolate_feature_div', 'display', 'none') // elements/element-3
     changeElementStyle('#dp', 'marginTop', '25px') // marginTop
-    changeElementStyle('#acBadge_feature_div', 'display', 'none') // escolha da amazon
-    changeElementStyle('#logoByLine_feature_div', 'display', 'none') // barra superior que leva aos produtos da marca
+    changeElementStyle('#acBadge_feature_div', 'display', 'none') // elements/element-4
+    changeElementStyle('#logoByLine_feature_div', 'display', 'none') // elements/element-5
+    changeElementStyle('span.a-price.a-text-price', 'fontSize', '24px') // previous price
+    changeElementStyle('span.basisPriceLegalMessage', 'display', 'none') // previous price info icon
+    changeElementStyle('#basisPriceLegalMessage_feature_div', 'display', 'none') // elements/element-13
+    changeElementStyle('span.a-declarative>a#trigger_installmentCalculator', 'display', 'none') // elements/element-9
+    changeElementStyle('#image-block-pagination', 'display', 'none') // elements/element-10
+    changeElementStyle('#deliveryBlockContainerMobile', 'marginTop', '5000px') // elements/element-15
+    changeElementStyle('#icon-farm-widget-0', 'marginTop', '5000px') // elements/element-2
 
     const title = document.querySelector('#title') as HTMLElement // product title
     if (title) {
       title.classList.remove('a-size-small')
       title.style.fontSize = '20px'
       title.style.color = '#000'
+    }
+
+    /** *************************TEMPLATE: relampago******************************/
+    const thunderDeal = querySelectorElement('div.a-section.a-spacing-none.celwidget>div.a-row.header-text>span.a-text-bold')
+    if (thunderDeal && /oferta\srel.mpago/i.test(thunderDeal.innerText)) {
+      changeElementStyle('#dealsAccordionRow', 'border', 'none')
+      changeElementStyle('#claimBar_feature_div', 'display', 'none') // elements/element-7
+      changeElementStyle('#promoPriceBlockMessage_feature_div', 'display', 'none') // elements/element-8
+      changeElementStyle('#apex_mobile_feature_div>div.a-spacing-top-small', 'paddingBottom', '5000px')
+    }
+
+    /** *************************TEMPLATE: recorrente******************************/
+    const isRecurrent = isElementValid('span.a-text-bold', /comprar.com.recorr.ncia/i)
+    if (isRecurrent) {
+      changeElementStyle('#mobile_buybox_feature_div', 'display', 'none') // elements/element-11
+      changeElementStyle('#olpLinkWidget_feature_div', 'marginTop', '5000px') // elements/element-12
+    }
+    /** *************************TEMPLATE: livro (kindle ou capa comum) ******************************/
+    const isBook = isElementValid('span.slot-title>span', /capa.comum|kindle/i)
+    if (isBook) {
+      changeElementStyle('#tmm-grid-saf', 'display', 'none') // elements/element-14
+      changeElementStyle('#deliveryBlockContainerMobile', 'marginTop', '5000px') // elements/element-15
+
+      // case it is an kindle book
+      changeElementStyle('#KibboBuyboxMobileWeb_feature_div', 'marginTop', '5000px') // elements/element-15
+    }
+    /** *************************TEMPLATE: produtos com variacoes pre-selecionadas ******************************/
+    const preSelectedVariations = querySelectorElement('#twister-plus-mobile-inline-twister')
+    if (preSelectedVariations && preSelectedVariations.children.length > 0) {
+      changeElementStyle('#twisterController_feature_div', 'display', 'none')
     }
   }
 }

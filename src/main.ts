@@ -1,14 +1,16 @@
 import { AmazonProductPage } from './helper/amazon-product-page'
 
-// B00863NRHQ - temporario
+// B09L3TWVLB - comum - f
+// B0B57HLN9K - relampago / percentual vendido - f
+// B09S6P7ZV7 - recorrencia - f
+// B08YR623QQ - ebooks - f
+// 6555156961 - livro capa comum - f
+// B0B64DBVBF - produtos com variacoes pre-selecionadas -f
+// B09ZHZ9DN3 - meias / tenis / roupas de baixo - f
 // B07FB548ZM - variacoes
-// B000WH0X9E - relampago
-// B07522WHGC - ebooks
-// B09V48865W - iphone
 // B0BLCVLX88 - roupas
-// B0BVWG1BV2 - meias/tenis
 
-const screenshot = new AmazonProductPage('B0BVWG1BV2')
+const screenshot = new AmazonProductPage('<PRODUCT_ID_AMAZON>')
 
 screenshot.takeScreenshot()
   .catch(error => { console.error(error) })
