@@ -30,12 +30,22 @@ export class AmazonProductPage {
       if (element) element.style[CSSProperty] = CSSPropertyValue
     }
 
-    // TEMPLATE: all
-    changeElementStyle('#nav-main', 'display', 'none') // hide header
-    changeElementStyle('#detailILMPercolate_feature_div', 'display', 'none') // hide top banner
+    // function querySelectorElement(querySelector: string): null | HTMLElement {
+    //   const element = document.querySelector(querySelector) as HTMLElement
+    //   if (!element) return null
+    //   return element
+    // }
+
+    /** *************************TEMPLATE: all******************************/
+    changeElementStyle('#nav-main', 'display', 'none') // elements/element-1
+    changeElementStyle('#detailILMPercolate_feature_div', 'display', 'none') // elements/element-3
     changeElementStyle('#dp', 'marginTop', '25px') // marginTop
-    changeElementStyle('#acBadge_feature_div', 'display', 'none') // escolha da amazon
-    changeElementStyle('#logoByLine_feature_div', 'display', 'none') // barra superior que leva aos produtos da marca
+    changeElementStyle('#acBadge_feature_div', 'display', 'none') // elements/element-4
+    changeElementStyle('#logoByLine_feature_div', 'display', 'none') // elements/element-5
+    changeElementStyle('span.a-price.a-text-price', 'fontSize', '24px') // previous price
+    changeElementStyle('span.basisPriceLegalMessage', 'display', 'none') // previous price info icon
+    changeElementStyle('span.a-declarative>a#trigger_installmentCalculator', 'display', 'none') // elements/element-9
+    changeElementStyle('#image-block-pagination', 'display', 'none') // elements/element-10
 
     const title = document.querySelector('#title') as HTMLElement // product title
     if (title) {
