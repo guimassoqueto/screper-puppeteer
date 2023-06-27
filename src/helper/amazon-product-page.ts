@@ -30,11 +30,11 @@ export class AmazonProductPage {
       if (element) element.style[CSSProperty] = CSSPropertyValue
     }
 
-    // function querySelectorElement(querySelector: string): null | HTMLElement {
-    //   const element = document.querySelector(querySelector) as HTMLElement
-    //   if (!element) return null
-    //   return element
-    // }
+    function querySelectorElement (querySelector: string): null | HTMLElement {
+      const element = document.querySelector(querySelector) as HTMLElement
+      if (!element) return null
+      return element
+    }
 
     /** *************************TEMPLATE: all******************************/
     changeElementStyle('#nav-main', 'display', 'none') // elements/element-1
@@ -57,5 +57,14 @@ export class AmazonProductPage {
     /** *************************TEMPLATE: common******************************/
     // aparentemente é o elemento que define o que deve sumir a partir daqui
     changeElementStyle('#icon-farm-widget-0', 'marginTop', '5000px') // elements/element-2
+
+    /** *************************TEMPLATE: relampago******************************/
+    const thunderDeal = querySelectorElement('div.a-section.a-spacing-none.celwidget>div.a-row.header-text>span.a-text-bold')
+    if (thunderDeal && /oferta\srel.mpago/i.test(thunderDeal.innerText)) {
+      changeElementStyle('#dealsAccordionRow', 'border', 'none')
+      changeElementStyle('#claimBar_feature_div', 'display', 'none') // elements/element-7
+      changeElementStyle('#promoPriceBlockMessage_feature_div', 'display', 'none') // elements/element-8
+      changeElementStyle('#apex_mobile_feature_div>div.a-spacing-top-small', 'paddingBottom', '5000px')
+    }
   }
 }
