@@ -53,5 +53,9 @@ export class AmazonProductPage {
       title.style.fontSize = '20px'
       title.style.color = '#000'
     }
+
+    /** *************************TEMPLATE: common******************************/
+    // aparentemente é o elemento que define o que deve sumir a partir daqui
+    changeElementStyle('#icon-farm-widget-0', 'marginTop', '5000px') // elements/element-2
   }
 }
