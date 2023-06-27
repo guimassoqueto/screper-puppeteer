@@ -92,5 +92,10 @@ export class AmazonProductPage {
       // case it is an kindle book
       changeElementStyle('#KibboBuyboxMobileWeb_feature_div', 'marginTop', '5000px') // elements/element-15
     }
+    /** *************************TEMPLATE: produtos com variacoes pre-selecionadas ******************************/
+    const preSelectedVariations = querySelectorElement('#twister-plus-mobile-inline-twister')
+    if (preSelectedVariations && preSelectedVariations.children.length > 0) {
+      changeElementStyle('#twisterController_feature_div', 'display', 'none')
+    }
   }
 }
