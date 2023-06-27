@@ -41,7 +41,7 @@ export class AmazonProductPage {
       if (!elements.length) return false
 
       for (const element of elements) {
-        if (innerTextRegExp.test(element.innerText)) return true
+        if (innerTextRegExp.test((element as HTMLElement).innerText)) return true
       }
 
       return false
@@ -82,6 +82,15 @@ export class AmazonProductPage {
     if (isRecurrent) {
       changeElementStyle('#mobile_buybox_feature_div', 'display', 'none') // elements/element-11
       changeElementStyle('#olpLinkWidget_feature_div', 'marginTop', '5000px') // elements/element-12
+    }
+    /** *************************TEMPLATE: livro (kindle ou capa comum) ******************************/
+    const isBook = isElementValid('span.slot-title>span', /capa.comum|kindle/i)
+    if (isBook) {
+      changeElementStyle('#tmm-grid-saf', 'display', 'none') // elements/element-14
+      changeElementStyle('#deliveryBlockContainerMobile', 'marginTop', '5000px') // elements/element-15
+
+      // case it is an kindle book
+      changeElementStyle('#KibboBuyboxMobileWeb_feature_div', 'marginTop', '5000px') // elements/element-15
     }
   }
 }
