@@ -15,6 +15,7 @@ export class AmazonProductPage {
     this.browser = await puppeteer.launch({ headless: 'new' })
     this.page = await this.browser.newPage()
     await this.page.setExtraHTTPHeaders(fakeHeader())
+    this.page.setDefaultTimeout(60000)
 
     await this.page.emulate(this.device)
     await this.page.goto(this.productUrl, { waitUntil: 'networkidle0' })
@@ -60,6 +61,8 @@ export class AmazonProductPage {
     changeElementStyle('#image-block-pagination', 'display', 'none') // elements/element-10
     changeElementStyle('#deliveryBlockContainerMobile', 'marginTop', '5000px') // elements/element-15
     changeElementStyle('#icon-farm-widget-0', 'marginTop', '5000px') // elements/element-2
+    changeElementStyle('#socialProofingAsinFaceout_feature_div', 'display', 'none') // elements/element-18
+    changeElementStyle('div.a-accordion-row-a11y.a-accordion-row.a-declarative.accordion-header.mobb-header-css', 'display', 'none') // elements/element-19
 
     const title = document.querySelector('#title') as HTMLElement // product title
     if (title) {
@@ -96,6 +99,12 @@ export class AmazonProductPage {
     const preSelectedVariations = querySelectorElement('#twister-plus-mobile-inline-twister')
     if (preSelectedVariations && preSelectedVariations.children.length > 0) {
       changeElementStyle('#twisterController_feature_div', 'display', 'none')
+    }
+    /** *************************TEMPLATE: oferta exclusiva prime******************************/
+    const isExclusivePrime = isElementValid('span.a-text-bold', /oferta.exclusiva.prime/i)
+    if (isExclusivePrime) {
+      changeElementStyle('#mobile_primeSavingsUpsellAccordionRow', 'border', 'none')
+      changeElementStyle('#pep_feature_div', 'marginTop', '5000px') // elements/element-15
     }
   }
 }
