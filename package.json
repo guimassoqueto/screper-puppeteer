@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "dotenv": "^16.3.1",
-    "puppeteer": "^20.7.3",
+    "puppeteer": "^20.8.0",
     "user-agents": "^1.0.1422"
   }
 }
