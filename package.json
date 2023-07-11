@@ -5,11 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "js": "node dist/main.js --id=50",
-    "ts": "ts-node src/main.ts --id=50",
-    "tsc:build": "tsc",
-    "tsc:watch": "tsc --watch",
-    "node:watch": "node --watch dist/main.js"
+    "js": "node dist/main.js",
+    "ts": "ts-node node --loader ts-node/esm src/main.ts",
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
@@ -22,6 +20,8 @@
     "@types/node": "^18.15.10",
     "p-limit": "^4.0.0",
     "puppeteer": "^20.8.0",
+    "redis": "^4.6.7",
+    "ts-node": "^10.9.1",
     "user-agents": "^1.0.1436"
   }
 }
