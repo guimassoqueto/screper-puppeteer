@@ -1,18 +1,11 @@
 i:
-	npx husky install && npm install
-
-tsw:
-	npm run tsc:watch
-
-nw:
-	npm run node:watch
+	npm install && npx husky install
 
 b:
-	npm run tsc:build
+	npm run build
 
 js:
-	id=$(id)
-	@if [ -n "$id" ]; then make b && npm run js --id=$(id); fi
+	npm run js
 	
 ts:
 	npm run ts
