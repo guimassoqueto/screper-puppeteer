@@ -1,13 +1,10 @@
 {
   "compilerOptions": {
-    "rootDir": "./src",
-    "outDir": "./dist",
-    "module": "CommonJS",
-    "target": "ES2019",
-    "esModuleInterop": true,
-    "allowJs": false,
-    "strictNullChecks": true,
-    "sourceMap": true
+    "module": "NodeNext",
+    "moduleResolution": "nodenext",
+    "target": "ES2020",
+    "sourceMap": true,
+    "outDir": "dist",
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*"],
 }

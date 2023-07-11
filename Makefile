@@ -1,52 +1,22 @@
-PACKAGE_MANAGER=npm
-PACKAGE_MANAGER_RUN=npm run
-HUSKY=npx husky install
-GUI=xdg-open
-
-## intall husky hooks and node dependencies
 i:
-	${HUSKY} && ${PACKAGE_MANAGER} install
+	npx husky install && npm install
 
-## run dist/main.ts without transpile 
-sts:
-	rm -rf screenshots/* && ${PACKAGE_MANAGER_RUN} run:ts
+tsw:
+	npm run tsc:watch
 
-## run dist/main.ts without transpile 
-sjs:
-	rm -rf dist/ && ${PACKAGE_MANAGER_RUN} build && ${PACKAGE_MANAGER_RUN} run:js
+nw:
+	npm run node:watch
 
-## create .env file from .env.example
-env:
-	cat .env.sample 1> .env
-
-## transpile to typescript
 b:
-	${PACKAGE_MANAGER_RUN} build
+	npm run tsc:build
 
-## run all tests (slowly: with logs and details)
-t:
-	${PACKAGE_MANAGER_RUN} test
-
-## run all tests in a simplified way (fastes, no logs, no info, no details)
+js:
+	id=$(id)
+	@if [ -n "$id" ]; then make b && npm run js --id=$(id); fi
+	
 ts:
-	${PACKAGE_MANAGER_RUN} test:simplified
-
-## run all unit tests (located in tests/unit)
-tu:
-	${PACKAGE_MANAGER_RUN} test:unit
-
-## run all integratiopn tests (located in tests/integration)
-ti:
-	${PACKAGE_MANAGER_RUN} test:integration
-
-## run test on a specif file
-tf:
-	${PACKAGE_MANAGER_RUN} test -- tests/unit/test-case.test.ts
+	npm run ts
 
 ## open repository page
 or:
 	open "https://github.com/guimassoqueto/scraper-puppeteer"
-
-## open project folder in GUI
-od:
-	${GUI} .
