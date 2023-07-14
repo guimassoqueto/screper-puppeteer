@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@types/node": "^18.15.10",
+    "dotenv": "^16.3.1",
     "p-limit": "^4.0.0",
     "puppeteer": "^20.8.0",
     "redis": "^4.6.7",
