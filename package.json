@@ -23,6 +23,6 @@
     "amqplib": "^0.10.3",
     "dotenv": "^16.3.1",
     "puppeteer": "^20.8.0",
-    "user-agents": "^1.0.1436"
+    "user-agents": "^1.0.1442"
   }
 }
