@@ -1,3 +1,5 @@
+MOVE=mv /home/gmassoqueto/github-repos/python-flask-app/static/* /home/gmassoqueto/github-repos/python-flask-app/_static
+
 i:
 	npm install && npx husky install
 
@@ -5,10 +7,10 @@ b:
 	npm run build
 
 js:
-	npm run js
+	${MOVE} && npm run js
 	
 ts:
-	npm run ts
+	${MOVE} && npm run ts
 
 ## open repository page
 or:
