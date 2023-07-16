@@ -47,7 +47,7 @@ export class AmazonScreenshot {
   private page: Page
   private readonly productUrl: string
 
-  constructor(private readonly productCode: string, private readonly counter: string) {
+  constructor(private readonly productCode: string) {
     this.productUrl = `https://www.amazon.com.br/dp/${this.productCode}`
   }
 
@@ -65,7 +65,7 @@ export class AmazonScreenshot {
     await this.page.evaluate(this.evaluate)
 
     await this.page.screenshot({
-      path: `${SCREENSHOTS_LOCATION}/${this.counter}_${this.productCode}.png`,
+      path: `${SCREENSHOTS_LOCATION}/${new Date().getTime().toString()}_${this.productCode}.png`,
     })
     await this.browser.close()
   }
