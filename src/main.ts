@@ -1,22 +1,16 @@
 import { AmazonScreenshot } from "./amazon/amazon-screenshot.js";
-import { createClient } from 'redis';
+import { RabbitMQReceiver, TConsumer } from './helpers/rabbitmq/receiver.js'
 
-const client = createClient();
-await client.connect();
 
-let loop = true
-
-while(loop) {
-  if (client.isReady) {
-    const raw_pids = await client.get('amazon_pids');
-    if (raw_pids) { 
-      loop = false
-      const pids: string[] = JSON.parse(raw_pids)
+const consumer = (channel) => {
+  return async (message) => {
+    if (message) {
+      const pids = JSON.parse(message.content.toString())
       console.log(`${pids.length} pids added!`)
-      let counter = 1;
+      let counter = 1
       for (const pid of pids) {
         try {
-          const screenshot = new AmazonScreenshot(pid, String(counter).padStart(3, '0'));
+          const screenshot = new AmazonScreenshot(pid);
           await screenshot.takeScreenshot();
           counter += 1;
         } catch (error) {
@@ -24,11 +18,16 @@ while(loop) {
           continue
         }
       }
-      await client.del('amazon_pids')
-      console.log("screenshots taken!")
-      loop = true
+      channel.ack(message)
+      console.log('screenshots taken')
     }
-  } else {
-    await client.connect()
   }
+}
+
+try {
+  console.log('Waiting for new messages...')
+  await RabbitMQReceiver.receiver(consumer)
+}
+catch(error) {
+  console.error(error)
 }
