@@ -1,33 +1,33 @@
 import { AmazonScreenshot } from "./amazon/amazon-screenshot.js";
-import { RabbitMQReceiver, TConsumer } from './helpers/rabbitmq/receiver.js'
+import { RabbitMQReceiver, TConsumer } from "./helpers/rabbitmq/receiver.js";
 
-
-const consumer = (channel) => {
+/**
+ * a mensagem recebida (message) deve obrigatoriamente ser uma lista de pid para funcionar
+ */
+const message_handler: TConsumer = (channel) => {
   return async (message) => {
     if (message) {
-      const pids = JSON.parse(message.content.toString())
-      console.log(`${pids.length} pids added!`)
-      let counter = 1
+      const pids = JSON.parse(message.content.toString());
+      console.log(`${pids.length} pids added!`);
+
       for (const pid of pids) {
         try {
           const screenshot = new AmazonScreenshot(pid);
           await screenshot.takeScreenshot();
-          counter += 1;
         } catch (error) {
-          console.error(error)
-          continue
+          console.error(error);
+          continue;
         }
       }
-      channel.ack(message)
-      console.log('screenshots taken')
+      channel.ack(message);
+      console.log("screenshots taken");
     }
-  }
-}
+  };
+};
 
 try {
-  console.log('Waiting for new messages...')
-  await RabbitMQReceiver.receiver(consumer)
-}
-catch(error) {
-  console.error(error)
+  console.log("Waiting for new messages...");
+  await RabbitMQReceiver.receiver(message_handler);
+} catch (error) {
+  console.error(error);
 }
